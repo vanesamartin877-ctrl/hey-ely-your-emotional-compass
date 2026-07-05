@@ -43,121 +43,119 @@ export function AvatarSVG({ config, size = 160 }: { config: AvatarConfig; size?:
 
   return (
     <svg 
-      viewBox="0 0 200 200" 
+      viewBox="15 10 170 180" 
       width={size} 
       height={size} 
-      className="drop-shadow-sm w-full h-full object-contain block"
+      className="drop-shadow-sm w-full h-full object-contain block scale-105"
     >
-      <rect width="200" height="200" fill="none" />
+      <rect x="15" y="10" width="170" height="180" fill="none" />
 
       {/* DETRÁS DEL CUERPO: Cabello Largo Trasero */}
       {c.hair === "long" && (
-        <path d="M50 80 Q30 130 50 160 Q100 170 150 160 Q170 130 150 80 Z" fill={c.hairColor} {...strokeProps} />
+        <path d="M45 75 Q20 130 45 165 Q100 175 155 165 Q180 130 155 75 Z" fill={c.hairColor} {...strokeProps} />
       )}
       {c.hair === "ponytail" && (
-        <g transform="translate(35, 30)">
-          <path d="M110 50 C140 30 160 60 150 90 C130 110 110 90 110 70 Z" fill={c.hairColor} {...strokeProps} />
-          <path d="M112 65 Q125 55 135 75" fill="none" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round" />
+        <g transform="translate(35, 25)">
+          <path d="M115 50 C150 30 170 60 160 95 C135 115 115 90 115 70 Z" fill={c.hairColor} {...strokeProps} />
+          <path d="M117 65 Q130 55 142 75" fill="none" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round" />
         </g>
       )}
       {c.hair === "buns" && (
         <g>
-          <circle cx="55" cy="45" r="22" fill={c.hairColor} {...strokeProps} />
-          <circle cx="145" cy="45" r="22" fill={c.hairColor} {...strokeProps} />
+          <circle cx="50" cy="40" r="24" fill={c.hairColor} {...strokeProps} />
+          <circle cx="150" cy="40" r="24" fill={c.hairColor} {...strokeProps} />
         </g>
       )}
 
-      {/* PIES Y ZAPATOS (Llamativos de caricatura) */}
+      {/* PIES Y ZAPATOS */}
       <g>
         {/* Zapato Izquierdo */}
-        <ellipse cx="80" cy="188" rx="16" ry="10" fill="#2C1810" {...strokeProps} />
-        <ellipse cx="80" cy="184" rx="16" ry="6" fill="#FFF" opacity="0.3" />
+        <ellipse cx="78" cy="190" rx="18" ry="10" fill="#2C1810" {...strokeProps} />
+        <ellipse cx="78" cy="186" rx="18" ry="5" fill="#FFF" opacity="0.3" />
         {/* Zapato Derecho */}
-        <ellipse cx="120" cy="188" rx="16" ry="10" fill="#2C1810" {...strokeProps} />
-        <ellipse cx="120" cy="184" rx="16" ry="6" fill="#FFF" opacity="0.3" />
+        <ellipse cx="122" cy="190" rx="18" ry="10" fill="#2C1810" {...strokeProps} />
+        <ellipse cx="122" cy="186" rx="18" ry="5" fill="#FFF" opacity="0.3" />
       </g>
 
       {/* PIERNAS CORTAS */}
-      <rect x="74" y="165" width="12" height="20" fill={c.skin} {...strokeProps} />
-      <rect x="114" y="165" width="12" height="20" fill={c.skin} {...strokeProps} />
+      <rect x="72" y="165" width="14" height="22" fill={c.skin} {...strokeProps} />
+      <rect x="114" y="165" width="14" height="22" fill={c.skin} {...strokeProps} />
 
-      {/* BRAZOS (Tipo caricatura, ligeramente separados) */}
+      {/* BRAZOS */}
       <g>
         {/* Brazo Izquierdo */}
-        <path d="M60 142 Q40 155 45 168 Q53 172 60 158 Z" fill={c.skin} {...strokeProps} />
-        {c.outfit !== "dress" && <path d="M60 142 Q48 150 52 158" fill={c.outfitColor} {...strokeProps} />}
+        <path d="M55 138 Q30 152 37 168 Q47 172 55 156 Z" fill={c.skin} {...strokeProps} />
+        {c.outfit !== "dress" && <path d="M55 138 Q42 148 46 157" fill={c.outfitColor} {...strokeProps} />}
         
         {/* Brazo Derecho */}
-        <path d="M140 142 Q160 155 155 168 Q147 172 140 158 Z" fill={c.skin} {...strokeProps} />
-        {c.outfit !== "dress" && <path d="M140 142 Q152 150 148 158" fill={c.outfitColor} {...strokeProps} />}
+        <path d="M145 138 Q170 152 163 168 Q153 172 145 156 Z" fill={c.skin} {...strokeProps} />
+        {c.outfit !== "dress" && <path d="M145 138 Q158 148 154 157" fill={c.outfitColor} {...strokeProps} />}
       </g>
 
       {/* CUERPO PEQUEÑO (Ropa) */}
       <g>
         {c.outfit === "dress" ? (
-          <path d="M65 140 L50 175 L150 175 L135 140 Z" fill={c.outfitColor} {...strokeProps} />
+          <path d="M60 136 L42 176 L158 176 L140 136 Z" fill={c.outfitColor} {...strokeProps} />
         ) : c.outfit === "jacket" ? (
           <>
-            <rect x="62" y="138" width="76" height="32" rx="10" fill={c.outfitColor} {...strokeProps} />
-            <line x1="100" y1="138" x2="100" y2="170" stroke="#1A1A1A" strokeWidth="2.5" />
-            <circle cx="94" cy="154" r="3" fill="#FFF" />
+            <rect x="56" y="134" width="88" height="36" rx="11" fill={c.outfitColor} {...strokeProps} />
+            <line x1="100" y1="134" x2="100" y2="170" stroke="#1A1A1A" strokeWidth="2.5" />
+            <circle cx="93" cy="152" r="3" fill="#FFF" />
           </>
         ) : (
-          <rect x="62" y="138" width="76" height="32" rx="10" fill={c.outfitColor} {...strokeProps} />
+          <rect x="56" y="134" width="88" height="36" rx="11" fill={c.outfitColor} {...strokeProps} />
         )}
 
         {/* Detalle Hoodie */}
         {c.outfit === "hoodie" && (
-          <path d="M75 138 Q100 154 125 138" fill="none" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />
+          <path d="M72 134 Q100 152 128 134" fill="none" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />
         )}
       </g>
 
       {/* CUELLO RECTANGULAR CHICO */}
-      <rect x="92" y="125" width="16" height="15" fill={c.skin} {...strokeProps} />
+      <rect x="91" y="120" width="18" height="16" fill={c.skin} {...strokeProps} />
 
-      {/* CABEZA ENORME (Estilo Chibi, 45% del total) */}
-      <rect x="52" y="45" width="96" height="90" rx="42" fill={c.skin} {...strokeProps} />
+      {/* CABEZA ENORME CHIBI */}
+      <rect x="48" y="36" width="104" height="96" rx="46" fill={c.skin} {...strokeProps} />
 
       {/* MEJILLAS SONROJADAS KAWAII */}
-      <ellipse cx="68" cy="110" rx="9" ry="5" fill="#FF94B8" opacity="0.6" />
-      <ellipse cx="132" cy="110" rx="9" ry="5" fill="#FF94B8" opacity="0.6" />
+      <ellipse cx="66" cy="106" rx="11" ry="6" fill="#FF94B8" opacity="0.6" />
+      <ellipse cx="134" cy="106" rx="11" ry="6" fill="#FF94B8" opacity="0.6" />
 
       {/* OJOS GRANDES CON BRILLO KAWAII */}
       <g>
         {c.eyes === "normal" && (
           <>
             {/* Ojo Izquierdo */}
-            <ellipse cx="74" cy="96" rx="9" ry="12" fill="#1A1A1A" />
-            <circle cx="72" cy="91" r="3.5" fill="#FFF" />
-            <circle cx="77" cy="100" r="1.5" fill="#FFF" />
+            <ellipse cx="73" cy="91" rx="10" ry="13" fill="#1A1A1A" />
+            <circle cx="71" cy="85" r="4" fill="#FFF" />
+            <circle cx="76" cy="95" r="1.5" fill="#FFF" />
             {/* Ojo Derecho */}
-            <ellipse cx="126" cy="96" rx="9" ry="12" fill="#1A1A1A" />
-            <circle cx="124" cy="91" r="3.5" fill="#FFF" />
-            <circle cx="129" cy="100" r="1.5" fill="#FFF" />
+            <ellipse cx="127" cy="91" rx="10" ry="13" fill="#1A1A1A" />
+            <circle cx="125" cy="85" r="4" fill="#FFF" />
+            <circle cx="130" cy="95" r="1.5" fill="#FFF" />
           </>
         )}
         {c.eyes === "happy" && (
           <>
-            <path d="M64 98 Q74 84 84 98" fill="none" stroke="#1A1A1A" strokeWidth="4.5" strokeLinecap="round" />
-            <path d="M116 98 Q126 84 136 98" fill="none" stroke="#1A1A1A" strokeWidth="4.5" strokeLinecap="round" />
+            <path d="M62 93 Q73 78 84 93" fill="none" stroke="#1A1A1A" strokeWidth="5" strokeLinecap="round" />
+            <path d="M116 93 Q127 78 138 93" fill="none" stroke="#1A1A1A" strokeWidth="5" strokeLinecap="round" />
           </>
         )}
         {c.eyes === "wink" && (
           <>
-            <ellipse cx="74" cy="96" rx="9" ry="12" fill="#1A1A1A" />
-            <circle cx="72" cy="91" r="3.5" fill="#FFF" />
-            <circle cx="77" cy="100" r="1.5" fill="#FFF" />
-            <path d="M116 96 Q126 84 136 96" fill="none" stroke="#1A1A1A" strokeWidth="4.5" strokeLinecap="round" />
+            <ellipse cx="73" cy="91" rx="10" ry="13" fill="#1A1A1A" />
+            <circle cx="71" cy="85" r="4" fill="#FFF" />
+            <circle cx="76" cy="95" r="1.5" fill="#FFF" />
+            <path d="M116 91 Q127 76 138 91" fill="none" stroke="#1A1A1A" strokeWidth="5" strokeLinecap="round" />
           </>
         )}
         {c.eyes === "sparkle" && (
           <>
-            {/* Izquierdo animado/brillante */}
-            <ellipse cx="74" cy="96" rx="9" ry="12" fill="#1A1A1A" />
-            <path d="M74 88 L76 93 L81 93 L77 96 L79 101 L74 98 L69 101 L71 96 L67 93 L72 93 Z" fill="#FFF" />
-            {/* Derecho animado/brillante */}
-            <ellipse cx="126" cy="96" rx="9" ry="12" fill="#1A1A1A" />
-            <path d="M126 88 L128 93 L133 93 L129 96 L131 101 L126 98 L121 101 L123 96 L119 93 L124 93 Z" fill="#FFF" />
+            <ellipse cx="73" cy="91" rx="10" ry="13" fill="#1A1A1A" />
+            <path d="M73 82 L75 88 L81 88 L76 91 L78 97 L73 94 L68 97 L70 91 L65 88 L71 88 Z" fill="#FFF" />
+            <ellipse cx="127" cy="91" rx="10" ry="13" fill="#1A1A1A" />
+            <path d="M127 82 L129 88 L135 88 L130 91 L132 97 L127 94 L122 97 L124 91 L119 88 L125 88 Z" fill="#FFF" />
           </>
         )}
       </g>
@@ -165,35 +163,35 @@ export function AvatarSVG({ config, size = 160 }: { config: AvatarConfig; size?:
       {/* BOCA PEQUEÑA Y EXPRESIVA */}
       <g>
         {c.mood === "happy" && (
-          <path d="M94 110 Q100 118 106 110" fill="none" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />
+          <path d="M93 106 Q100 115 107 106" fill="none" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />
         )}
         {c.mood === "calm" && (
-          <line x1="95" y1="112" x2="105" y2="112" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />
+          <line x1="94" y1="108" x2="106" y2="108" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />
         )}
         {c.mood === "excited" && (
-          <path d="M93 108 Q100 124 107 108 Z" fill="#FF6B8B" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />
+          <path d="M92 104 Q100 122 108 104 Z" fill="#FF6B8B" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />
         )}
         {c.mood === "thinking" && (
-          <path d="M95 113 Q100 108 105 111" fill="none" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />
+          <path d="M94 109 Q100 104 106 107" fill="none" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />
         )}
       </g>
 
-      {/* CABELLO DELANTERO (Mechones grandes y redondeados) */}
+      {/* CABELLO DELANTERO */}
       <g>
         {c.hair === "short" && (
-          <path d="M52 75 Q45 40 100 38 Q155 40 148 75 Q130 52 115 62 Q100 48 85 62 Q70 52 52 75 Z" fill={c.hairColor} {...strokeProps} />
+          <path d="M48 70 Q40 30 100 28 Q160 30 152 70 Q132 45 116 55 Q100 40 84 55 Q68 45 48 70 Z" fill={c.hairColor} {...strokeProps} />
         )}
         {c.hair === "long" && (
-          <path d="M52 75 Q45 40 100 38 Q155 40 148 75 Q132 55 120 62 Q100 45 80 62 Q68 55 52 75 Z" fill={c.hairColor} {...strokeProps} />
+          <path d="M48 70 Q40 30 100 28 Q160 30 152 70 Q134 48 121 55 Q100 38 79 55 Q66 48 48 70 Z" fill={c.hairColor} {...strokeProps} />
         )}
         {c.hair === "curly" && (
-          <path d="M50 76 C40 50 60 30 80 40 C90 25 110 25 120 40 C140 30 160 50 150 76 C135 60 125 65 115 58 C100 48 85 58 75 58 C65 65 58 60 50 76 Z" fill={c.hairColor} {...strokeProps} />
+          <path d="M46 70 C34 42 56 20 78 32 C89 15 111 15 122 32 C144 20 166 42 154 70 C138 52 127 58 116 50 C100 38 84 50 74 50 C63 58 55 52 46 70 Z" fill={c.hairColor} {...strokeProps} />
         )}
         {c.hair === "ponytail" && (
-          <path d="M52 75 Q45 40 100 38 Q155 40 148 75 Q130 52 115 62 Q100 48 85 62 Q70 52 52 75 Z" fill={c.hairColor} {...strokeProps} />
+          <path d="M48 70 Q40 30 100 28 Q160 30 152 70 Q132 45 116 55 Q100 40 84 55 Q68 45 48 70 Z" fill={c.hairColor} {...strokeProps} />
         )}
         {c.hair === "buns" && (
-          <path d="M52 75 Q45 45 100 42 Q155 45 148 75 Q130 55 115 62 Q100 50 85 62 Q70 55 52 75 Z" fill={c.hairColor} {...strokeProps} />
+          <path d="M48 70 Q40 35 100 32 Q160 35 152 70 Q132 48 116 55 Q100 42 84 55 Q68 48 48 70 Z" fill={c.hairColor} {...strokeProps} />
         )}
       </g>
 
@@ -201,31 +199,30 @@ export function AvatarSVG({ config, size = 160 }: { config: AvatarConfig; size?:
       <g>
         {c.accessory === "glasses" && (
           <>
-            <circle cx="76" cy="98" r="15" fill="none" stroke="#1A1A1A" strokeWidth="3.5" />
-            <circle cx="124" cy="98" r="15" fill="none" stroke="#1A1A1A" strokeWidth="3.5" />
-            <line x1="91" y1="98" x2="109" y2="98" stroke="#1A1A1A" strokeWidth="3.5" />
-            {/* Brillo del lente */}
-            <line x1="68" y1="90" x2="76" y2="98" stroke="#FFF" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
-            <line x1="116" y1="90" x2="124" y2="98" stroke="#FFF" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+            <circle cx="74" cy="92" r="17" fill="none" stroke="#1A1A1A" strokeWidth="3.5" />
+            <circle cx="126" cy="92" r="17" fill="none" stroke="#1A1A1A" strokeWidth="3.5" />
+            <line x1="91" y1="92" x2="109" y2="92" stroke="#1A1A1A" strokeWidth="3.5" />
+            <line x1="65" y1="83" x2="74" y2="92" stroke="#FFF" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+            <line x1="117" y1="83" x2="126" y2="92" stroke="#FFF" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
           </>
         )}
         {c.accessory === "cap" && (
           <g>
-            <path d="M56 58 Q100 20 144 58 Z" fill="#7A9AC9" {...strokeProps} />
-            <path d="M130 54 Q170 54 180 64 L144 64 Z" fill="#6585B2" {...strokeProps} />
+            <path d="M52 52 Q100 12 148 52 Z" fill="#7A9AC9" {...strokeProps} />
+            <path d="M132 48 Q174 48 185 58 L148 58 Z" fill="#6585B2" {...strokeProps} />
           </g>
         )}
         {c.accessory === "headphones" && (
           <>
-            <path d="M54 75 Q54 32 100 32 Q146 32 146 75" fill="none" stroke="#8B7EF1" strokeWidth="7" strokeLinecap="round" />
-            <rect x="46" y="74" width="14" height="26" rx="6" fill="#8B7EF1" {...strokeProps} />
-            <rect x="140" y="74" width="14" height="26" rx="6" fill="#8B7EF1" {...strokeProps} />
+            <path d="M50 70 Q50 24 100 24 Q150 24 150 70" fill="none" stroke="#8B7EF1" strokeWidth="8" strokeLinecap="round" />
+            <rect x="41" y="68" width="15" height="28" rx="7" fill="#8B7EF1" {...strokeProps} />
+            <rect x="144" y="68" width="15" height="28" rx="7" fill="#8B7EF1" {...strokeProps} />
           </>
         )}
         {c.accessory === "earrings" && (
           <>
-            <circle cx="49" cy="104" r="4" fill="#F5C842" {...strokeProps} />
-            <circle cx="151" cy="104" r="4" fill="#F5C842" {...strokeProps} />
+            <circle cx="44" cy="100" r="4.5" fill="#F5C842" {...strokeProps} />
+            <circle cx="156" cy="100" r="4.5" fill="#F5C842" {...strokeProps} />
           </>
         )}
       </g>
