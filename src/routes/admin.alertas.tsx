@@ -23,7 +23,7 @@ function Alerts() {
   });
 
   async function changeStatus(id: string, status: string) {
-    await supabase.from("alerts").update({ status }).eq("id", id);
+    await supabase.from("alerts").update({ status: status as any }).eq("id", id);
     qc.invalidateQueries({ queryKey: ["alerts"] });
   }
 

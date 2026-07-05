@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WebRouteImport } from './routes/web'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/app'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as WebRecursosRouteImport } from './routes/web.recursos'
 import { Route as WebQueEsRouteImport } from './routes/web.que-es'
 import { Route as WebNoticiasRouteImport } from './routes/web.noticias'
@@ -31,6 +33,10 @@ import { Route as AppJuegosRouteImport } from './routes/app.juegos'
 import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppAvatarRouteImport } from './routes/app.avatar'
 import { Route as ApiChatRouteImport } from './routes/api.chat'
+import { Route as AdminNoticiasRouteImport } from './routes/admin.noticias'
+import { Route as AdminEstudiantesRouteImport } from './routes/admin.estudiantes'
+import { Route as AdminEncuestasRouteImport } from './routes/admin.encuestas'
+import { Route as AdminAlertasRouteImport } from './routes/admin.alertas'
 import { Route as AppJuegosIndexRouteImport } from './routes/app.juegos.index'
 import { Route as AppJuegosTriviaRouteImport } from './routes/app.juegos.trivia'
 import { Route as AppJuegosRespiraRouteImport } from './routes/app.juegos.respira'
@@ -51,6 +57,11 @@ const AppRoute = AppRouteImport.update({
   path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -60,6 +71,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const WebRecursosRoute = WebRecursosRouteImport.update({
   id: '/recursos',
@@ -146,6 +162,26 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminNoticiasRoute = AdminNoticiasRouteImport.update({
+  id: '/noticias',
+  path: '/noticias',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEstudiantesRoute = AdminEstudiantesRouteImport.update({
+  id: '/estudiantes',
+  path: '/estudiantes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEncuestasRoute = AdminEncuestasRouteImport.update({
+  id: '/encuestas',
+  path: '/encuestas',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAlertasRoute = AdminAlertasRouteImport.update({
+  id: '/alertas',
+  path: '/alertas',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AppJuegosIndexRoute = AppJuegosIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -169,9 +205,14 @@ const AppJuegosMemoramaRoute = AppJuegosMemoramaRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
   '/web': typeof WebRouteWithChildren
+  '/admin/alertas': typeof AdminAlertasRoute
+  '/admin/encuestas': typeof AdminEncuestasRoute
+  '/admin/estudiantes': typeof AdminEstudiantesRoute
+  '/admin/noticias': typeof AdminNoticiasRoute
   '/api/chat': typeof ApiChatRoute
   '/app/avatar': typeof AppAvatarRoute
   '/app/chat': typeof AppChatRoute
@@ -189,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/web/noticias': typeof WebNoticiasRoute
   '/web/que-es': typeof WebQueEsRoute
   '/web/recursos': typeof WebRecursosRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/app/juegos/memorama': typeof AppJuegosMemoramaRoute
   '/app/juegos/respira': typeof AppJuegosRespiraRoute
@@ -199,6 +241,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/web': typeof WebRouteWithChildren
+  '/admin/alertas': typeof AdminAlertasRoute
+  '/admin/encuestas': typeof AdminEncuestasRoute
+  '/admin/estudiantes': typeof AdminEstudiantesRoute
+  '/admin/noticias': typeof AdminNoticiasRoute
   '/api/chat': typeof ApiChatRoute
   '/app/avatar': typeof AppAvatarRoute
   '/app/chat': typeof AppChatRoute
@@ -215,6 +261,7 @@ export interface FileRoutesByTo {
   '/web/noticias': typeof WebNoticiasRoute
   '/web/que-es': typeof WebQueEsRoute
   '/web/recursos': typeof WebRecursosRoute
+  '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
   '/app/juegos/memorama': typeof AppJuegosMemoramaRoute
   '/app/juegos/respira': typeof AppJuegosRespiraRoute
@@ -224,9 +271,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
   '/web': typeof WebRouteWithChildren
+  '/admin/alertas': typeof AdminAlertasRoute
+  '/admin/encuestas': typeof AdminEncuestasRoute
+  '/admin/estudiantes': typeof AdminEstudiantesRoute
+  '/admin/noticias': typeof AdminNoticiasRoute
   '/api/chat': typeof ApiChatRoute
   '/app/avatar': typeof AppAvatarRoute
   '/app/chat': typeof AppChatRoute
@@ -244,6 +296,7 @@ export interface FileRoutesById {
   '/web/noticias': typeof WebNoticiasRoute
   '/web/que-es': typeof WebQueEsRoute
   '/web/recursos': typeof WebRecursosRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/app/juegos/memorama': typeof AppJuegosMemoramaRoute
   '/app/juegos/respira': typeof AppJuegosRespiraRoute
@@ -254,9 +307,14 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/app'
     | '/auth'
     | '/web'
+    | '/admin/alertas'
+    | '/admin/encuestas'
+    | '/admin/estudiantes'
+    | '/admin/noticias'
     | '/api/chat'
     | '/app/avatar'
     | '/app/chat'
@@ -274,6 +332,7 @@ export interface FileRouteTypes {
     | '/web/noticias'
     | '/web/que-es'
     | '/web/recursos'
+    | '/admin/'
     | '/app/'
     | '/app/juegos/memorama'
     | '/app/juegos/respira'
@@ -284,6 +343,10 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/web'
+    | '/admin/alertas'
+    | '/admin/encuestas'
+    | '/admin/estudiantes'
+    | '/admin/noticias'
     | '/api/chat'
     | '/app/avatar'
     | '/app/chat'
@@ -300,6 +363,7 @@ export interface FileRouteTypes {
     | '/web/noticias'
     | '/web/que-es'
     | '/web/recursos'
+    | '/admin'
     | '/app'
     | '/app/juegos/memorama'
     | '/app/juegos/respira'
@@ -308,9 +372,14 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/app'
     | '/auth'
     | '/web'
+    | '/admin/alertas'
+    | '/admin/encuestas'
+    | '/admin/estudiantes'
+    | '/admin/noticias'
     | '/api/chat'
     | '/app/avatar'
     | '/app/chat'
@@ -328,6 +397,7 @@ export interface FileRouteTypes {
     | '/web/noticias'
     | '/web/que-es'
     | '/web/recursos'
+    | '/admin/'
     | '/app/'
     | '/app/juegos/memorama'
     | '/app/juegos/respira'
@@ -337,6 +407,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
   WebRoute: typeof WebRouteWithChildren
@@ -366,6 +437,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -379,6 +457,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/'
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/web/recursos': {
       id: '/web/recursos'
@@ -499,6 +584,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/noticias': {
+      id: '/admin/noticias'
+      path: '/noticias'
+      fullPath: '/admin/noticias'
+      preLoaderRoute: typeof AdminNoticiasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/estudiantes': {
+      id: '/admin/estudiantes'
+      path: '/estudiantes'
+      fullPath: '/admin/estudiantes'
+      preLoaderRoute: typeof AdminEstudiantesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/encuestas': {
+      id: '/admin/encuestas'
+      path: '/encuestas'
+      fullPath: '/admin/encuestas'
+      preLoaderRoute: typeof AdminEncuestasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/alertas': {
+      id: '/admin/alertas'
+      path: '/alertas'
+      fullPath: '/admin/alertas'
+      preLoaderRoute: typeof AdminAlertasRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/app/juegos/': {
       id: '/app/juegos/'
       path: '/'
@@ -529,6 +642,24 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AdminRouteChildren {
+  AdminAlertasRoute: typeof AdminAlertasRoute
+  AdminEncuestasRoute: typeof AdminEncuestasRoute
+  AdminEstudiantesRoute: typeof AdminEstudiantesRoute
+  AdminNoticiasRoute: typeof AdminNoticiasRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAlertasRoute: AdminAlertasRoute,
+  AdminEncuestasRoute: AdminEncuestasRoute,
+  AdminEstudiantesRoute: AdminEstudiantesRoute,
+  AdminNoticiasRoute: AdminNoticiasRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface AppJuegosRouteChildren {
   AppJuegosMemoramaRoute: typeof AppJuegosMemoramaRoute
@@ -600,6 +731,7 @@ const WebRouteWithChildren = WebRoute._addFileChildren(WebRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
   WebRoute: WebRouteWithChildren,
