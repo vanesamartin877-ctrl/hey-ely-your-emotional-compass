@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WebRouteImport } from './routes/web'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WebRecursosRouteImport } from './routes/web.recursos'
 import { Route as WebQueEsRouteImport } from './routes/web.que-es'
@@ -19,10 +20,16 @@ import { Route as WebInicioRouteImport } from './routes/web.inicio'
 import { Route as WebFaqRouteImport } from './routes/web.faq'
 import { Route as WebFamiliasRouteImport } from './routes/web.familias'
 import { Route as WebContactoRouteImport } from './routes/web.contacto'
+import { Route as ApiChatRouteImport } from './routes/api.chat'
 
 const WebRoute = WebRouteImport.update({
   id: '/web',
   path: '/web',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -70,10 +77,17 @@ const WebContactoRoute = WebContactoRouteImport.update({
   path: '/contacto',
   getParentRoute: () => WebRoute,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/web': typeof WebRouteWithChildren
+  '/api/chat': typeof ApiChatRoute
   '/web/contacto': typeof WebContactoRoute
   '/web/familias': typeof WebFamiliasRoute
   '/web/faq': typeof WebFaqRoute
@@ -85,7 +99,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/web': typeof WebRouteWithChildren
+  '/api/chat': typeof ApiChatRoute
   '/web/contacto': typeof WebContactoRoute
   '/web/familias': typeof WebFamiliasRoute
   '/web/faq': typeof WebFaqRoute
@@ -98,7 +114,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/web': typeof WebRouteWithChildren
+  '/api/chat': typeof ApiChatRoute
   '/web/contacto': typeof WebContactoRoute
   '/web/familias': typeof WebFamiliasRoute
   '/web/faq': typeof WebFaqRoute
@@ -112,7 +130,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/web'
+    | '/api/chat'
     | '/web/contacto'
     | '/web/familias'
     | '/web/faq'
@@ -124,7 +144,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/web'
+    | '/api/chat'
     | '/web/contacto'
     | '/web/familias'
     | '/web/faq'
@@ -136,7 +158,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/web'
+    | '/api/chat'
     | '/web/contacto'
     | '/web/familias'
     | '/web/faq'
@@ -149,7 +173,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   WebRoute: typeof WebRouteWithChildren
+  ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -159,6 +185,13 @@ declare module '@tanstack/react-router' {
       path: '/web'
       fullPath: '/web'
       preLoaderRoute: typeof WebRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -224,6 +257,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WebContactoRouteImport
       parentRoute: typeof WebRoute
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -253,7 +293,9 @@ const WebRouteWithChildren = WebRoute._addFileChildren(WebRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   WebRoute: WebRouteWithChildren,
+  ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
