@@ -50,7 +50,7 @@ function ProfilePage() {
     <div className="max-w-3xl mx-auto">
       <div className="card-soft p-6 gradient-hero text-white flex items-center gap-4">
         <div className="rounded-3xl bg-white/20 p-2">
-          <AvatarSVG config={avatar?.config ?? {}} size={100} />
+          <AvatarSVG config={(avatar?.config as any) ?? {}} size={100} />
         </div>
         <div className="flex-1">
           <div className="text-sm opacity-90">Nivel {level}</div>

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/app/juegos")({ component: GamesIndex });
+export const Route = createFileRoute("/app/juegos/")({ component: GamesIndex });
 
 const games = [
   { key: "memorama", title: "Memorama de emociones", desc: "Encuentra las parejas de emociones.", emoji: "🎴", xp: 30 },

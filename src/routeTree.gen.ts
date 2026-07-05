@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WebRouteImport } from './routes/web'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as WebRecursosRouteImport } from './routes/web.recursos'
 import { Route as WebQueEsRouteImport } from './routes/web.que-es'
 import { Route as WebNoticiasRouteImport } from './routes/web.noticias'
@@ -20,7 +22,19 @@ import { Route as WebInicioRouteImport } from './routes/web.inicio'
 import { Route as WebFaqRouteImport } from './routes/web.faq'
 import { Route as WebFamiliasRouteImport } from './routes/web.familias'
 import { Route as WebContactoRouteImport } from './routes/web.contacto'
+import { Route as AppRecursosRouteImport } from './routes/app.recursos'
+import { Route as AppPerfilRouteImport } from './routes/app.perfil'
+import { Route as AppNoticiasRouteImport } from './routes/app.noticias'
+import { Route as AppMisionesRouteImport } from './routes/app.misiones'
+import { Route as AppMascotaRouteImport } from './routes/app.mascota'
+import { Route as AppJuegosRouteImport } from './routes/app.juegos'
+import { Route as AppChatRouteImport } from './routes/app.chat'
+import { Route as AppAvatarRouteImport } from './routes/app.avatar'
 import { Route as ApiChatRouteImport } from './routes/api.chat'
+import { Route as AppJuegosIndexRouteImport } from './routes/app.juegos.index'
+import { Route as AppJuegosTriviaRouteImport } from './routes/app.juegos.trivia'
+import { Route as AppJuegosRespiraRouteImport } from './routes/app.juegos.respira'
+import { Route as AppJuegosMemoramaRouteImport } from './routes/app.juegos.memorama'
 
 const WebRoute = WebRouteImport.update({
   id: '/web',
@@ -32,10 +46,20 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
 } as any)
 const WebRecursosRoute = WebRecursosRouteImport.update({
   id: '/recursos',
@@ -77,17 +101,86 @@ const WebContactoRoute = WebContactoRouteImport.update({
   path: '/contacto',
   getParentRoute: () => WebRoute,
 } as any)
+const AppRecursosRoute = AppRecursosRouteImport.update({
+  id: '/recursos',
+  path: '/recursos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPerfilRoute = AppPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNoticiasRoute = AppNoticiasRouteImport.update({
+  id: '/noticias',
+  path: '/noticias',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMisionesRoute = AppMisionesRouteImport.update({
+  id: '/misiones',
+  path: '/misiones',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMascotaRoute = AppMascotaRouteImport.update({
+  id: '/mascota',
+  path: '/mascota',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppJuegosRoute = AppJuegosRouteImport.update({
+  id: '/juegos',
+  path: '/juegos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppChatRoute = AppChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAvatarRoute = AppAvatarRouteImport.update({
+  id: '/avatar',
+  path: '/avatar',
+  getParentRoute: () => AppRoute,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppJuegosIndexRoute = AppJuegosIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppJuegosRoute,
+} as any)
+const AppJuegosTriviaRoute = AppJuegosTriviaRouteImport.update({
+  id: '/trivia',
+  path: '/trivia',
+  getParentRoute: () => AppJuegosRoute,
+} as any)
+const AppJuegosRespiraRoute = AppJuegosRespiraRouteImport.update({
+  id: '/respira',
+  path: '/respira',
+  getParentRoute: () => AppJuegosRoute,
+} as any)
+const AppJuegosMemoramaRoute = AppJuegosMemoramaRouteImport.update({
+  id: '/memorama',
+  path: '/memorama',
+  getParentRoute: () => AppJuegosRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
   '/web': typeof WebRouteWithChildren
   '/api/chat': typeof ApiChatRoute
+  '/app/avatar': typeof AppAvatarRoute
+  '/app/chat': typeof AppChatRoute
+  '/app/juegos': typeof AppJuegosRouteWithChildren
+  '/app/mascota': typeof AppMascotaRoute
+  '/app/misiones': typeof AppMisionesRoute
+  '/app/noticias': typeof AppNoticiasRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/app/recursos': typeof AppRecursosRoute
   '/web/contacto': typeof WebContactoRoute
   '/web/familias': typeof WebFamiliasRoute
   '/web/faq': typeof WebFaqRoute
@@ -96,12 +189,24 @@ export interface FileRoutesByFullPath {
   '/web/noticias': typeof WebNoticiasRoute
   '/web/que-es': typeof WebQueEsRoute
   '/web/recursos': typeof WebRecursosRoute
+  '/app/': typeof AppIndexRoute
+  '/app/juegos/memorama': typeof AppJuegosMemoramaRoute
+  '/app/juegos/respira': typeof AppJuegosRespiraRoute
+  '/app/juegos/trivia': typeof AppJuegosTriviaRoute
+  '/app/juegos/': typeof AppJuegosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/web': typeof WebRouteWithChildren
   '/api/chat': typeof ApiChatRoute
+  '/app/avatar': typeof AppAvatarRoute
+  '/app/chat': typeof AppChatRoute
+  '/app/mascota': typeof AppMascotaRoute
+  '/app/misiones': typeof AppMisionesRoute
+  '/app/noticias': typeof AppNoticiasRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/app/recursos': typeof AppRecursosRoute
   '/web/contacto': typeof WebContactoRoute
   '/web/familias': typeof WebFamiliasRoute
   '/web/faq': typeof WebFaqRoute
@@ -110,13 +215,27 @@ export interface FileRoutesByTo {
   '/web/noticias': typeof WebNoticiasRoute
   '/web/que-es': typeof WebQueEsRoute
   '/web/recursos': typeof WebRecursosRoute
+  '/app': typeof AppIndexRoute
+  '/app/juegos/memorama': typeof AppJuegosMemoramaRoute
+  '/app/juegos/respira': typeof AppJuegosRespiraRoute
+  '/app/juegos/trivia': typeof AppJuegosTriviaRoute
+  '/app/juegos': typeof AppJuegosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
   '/web': typeof WebRouteWithChildren
   '/api/chat': typeof ApiChatRoute
+  '/app/avatar': typeof AppAvatarRoute
+  '/app/chat': typeof AppChatRoute
+  '/app/juegos': typeof AppJuegosRouteWithChildren
+  '/app/mascota': typeof AppMascotaRoute
+  '/app/misiones': typeof AppMisionesRoute
+  '/app/noticias': typeof AppNoticiasRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/app/recursos': typeof AppRecursosRoute
   '/web/contacto': typeof WebContactoRoute
   '/web/familias': typeof WebFamiliasRoute
   '/web/faq': typeof WebFaqRoute
@@ -125,14 +244,28 @@ export interface FileRoutesById {
   '/web/noticias': typeof WebNoticiasRoute
   '/web/que-es': typeof WebQueEsRoute
   '/web/recursos': typeof WebRecursosRoute
+  '/app/': typeof AppIndexRoute
+  '/app/juegos/memorama': typeof AppJuegosMemoramaRoute
+  '/app/juegos/respira': typeof AppJuegosRespiraRoute
+  '/app/juegos/trivia': typeof AppJuegosTriviaRoute
+  '/app/juegos/': typeof AppJuegosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/app'
     | '/auth'
     | '/web'
     | '/api/chat'
+    | '/app/avatar'
+    | '/app/chat'
+    | '/app/juegos'
+    | '/app/mascota'
+    | '/app/misiones'
+    | '/app/noticias'
+    | '/app/perfil'
+    | '/app/recursos'
     | '/web/contacto'
     | '/web/familias'
     | '/web/faq'
@@ -141,12 +274,24 @@ export interface FileRouteTypes {
     | '/web/noticias'
     | '/web/que-es'
     | '/web/recursos'
+    | '/app/'
+    | '/app/juegos/memorama'
+    | '/app/juegos/respira'
+    | '/app/juegos/trivia'
+    | '/app/juegos/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/web'
     | '/api/chat'
+    | '/app/avatar'
+    | '/app/chat'
+    | '/app/mascota'
+    | '/app/misiones'
+    | '/app/noticias'
+    | '/app/perfil'
+    | '/app/recursos'
     | '/web/contacto'
     | '/web/familias'
     | '/web/faq'
@@ -155,12 +300,26 @@ export interface FileRouteTypes {
     | '/web/noticias'
     | '/web/que-es'
     | '/web/recursos'
+    | '/app'
+    | '/app/juegos/memorama'
+    | '/app/juegos/respira'
+    | '/app/juegos/trivia'
+    | '/app/juegos'
   id:
     | '__root__'
     | '/'
+    | '/app'
     | '/auth'
     | '/web'
     | '/api/chat'
+    | '/app/avatar'
+    | '/app/chat'
+    | '/app/juegos'
+    | '/app/mascota'
+    | '/app/misiones'
+    | '/app/noticias'
+    | '/app/perfil'
+    | '/app/recursos'
     | '/web/contacto'
     | '/web/familias'
     | '/web/faq'
@@ -169,10 +328,16 @@ export interface FileRouteTypes {
     | '/web/noticias'
     | '/web/que-es'
     | '/web/recursos'
+    | '/app/'
+    | '/app/juegos/memorama'
+    | '/app/juegos/respira'
+    | '/app/juegos/trivia'
+    | '/app/juegos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
   WebRoute: typeof WebRouteWithChildren
   ApiChatRoute: typeof ApiChatRoute
@@ -194,12 +359,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
     }
     '/web/recursos': {
       id: '/web/recursos'
@@ -257,6 +436,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WebContactoRouteImport
       parentRoute: typeof WebRoute
     }
+    '/app/recursos': {
+      id: '/app/recursos'
+      path: '/recursos'
+      fullPath: '/app/recursos'
+      preLoaderRoute: typeof AppRecursosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/perfil': {
+      id: '/app/perfil'
+      path: '/perfil'
+      fullPath: '/app/perfil'
+      preLoaderRoute: typeof AppPerfilRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/noticias': {
+      id: '/app/noticias'
+      path: '/noticias'
+      fullPath: '/app/noticias'
+      preLoaderRoute: typeof AppNoticiasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/misiones': {
+      id: '/app/misiones'
+      path: '/misiones'
+      fullPath: '/app/misiones'
+      preLoaderRoute: typeof AppMisionesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/mascota': {
+      id: '/app/mascota'
+      path: '/mascota'
+      fullPath: '/app/mascota'
+      preLoaderRoute: typeof AppMascotaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/juegos': {
+      id: '/app/juegos'
+      path: '/juegos'
+      fullPath: '/app/juegos'
+      preLoaderRoute: typeof AppJuegosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/chat': {
+      id: '/app/chat'
+      path: '/chat'
+      fullPath: '/app/chat'
+      preLoaderRoute: typeof AppChatRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/avatar': {
+      id: '/app/avatar'
+      path: '/avatar'
+      fullPath: '/app/avatar'
+      preLoaderRoute: typeof AppAvatarRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -264,8 +499,80 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/juegos/': {
+      id: '/app/juegos/'
+      path: '/'
+      fullPath: '/app/juegos/'
+      preLoaderRoute: typeof AppJuegosIndexRouteImport
+      parentRoute: typeof AppJuegosRoute
+    }
+    '/app/juegos/trivia': {
+      id: '/app/juegos/trivia'
+      path: '/trivia'
+      fullPath: '/app/juegos/trivia'
+      preLoaderRoute: typeof AppJuegosTriviaRouteImport
+      parentRoute: typeof AppJuegosRoute
+    }
+    '/app/juegos/respira': {
+      id: '/app/juegos/respira'
+      path: '/respira'
+      fullPath: '/app/juegos/respira'
+      preLoaderRoute: typeof AppJuegosRespiraRouteImport
+      parentRoute: typeof AppJuegosRoute
+    }
+    '/app/juegos/memorama': {
+      id: '/app/juegos/memorama'
+      path: '/memorama'
+      fullPath: '/app/juegos/memorama'
+      preLoaderRoute: typeof AppJuegosMemoramaRouteImport
+      parentRoute: typeof AppJuegosRoute
+    }
   }
 }
+
+interface AppJuegosRouteChildren {
+  AppJuegosMemoramaRoute: typeof AppJuegosMemoramaRoute
+  AppJuegosRespiraRoute: typeof AppJuegosRespiraRoute
+  AppJuegosTriviaRoute: typeof AppJuegosTriviaRoute
+  AppJuegosIndexRoute: typeof AppJuegosIndexRoute
+}
+
+const AppJuegosRouteChildren: AppJuegosRouteChildren = {
+  AppJuegosMemoramaRoute: AppJuegosMemoramaRoute,
+  AppJuegosRespiraRoute: AppJuegosRespiraRoute,
+  AppJuegosTriviaRoute: AppJuegosTriviaRoute,
+  AppJuegosIndexRoute: AppJuegosIndexRoute,
+}
+
+const AppJuegosRouteWithChildren = AppJuegosRoute._addFileChildren(
+  AppJuegosRouteChildren,
+)
+
+interface AppRouteChildren {
+  AppAvatarRoute: typeof AppAvatarRoute
+  AppChatRoute: typeof AppChatRoute
+  AppJuegosRoute: typeof AppJuegosRouteWithChildren
+  AppMascotaRoute: typeof AppMascotaRoute
+  AppMisionesRoute: typeof AppMisionesRoute
+  AppNoticiasRoute: typeof AppNoticiasRoute
+  AppPerfilRoute: typeof AppPerfilRoute
+  AppRecursosRoute: typeof AppRecursosRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAvatarRoute: AppAvatarRoute,
+  AppChatRoute: AppChatRoute,
+  AppJuegosRoute: AppJuegosRouteWithChildren,
+  AppMascotaRoute: AppMascotaRoute,
+  AppMisionesRoute: AppMisionesRoute,
+  AppNoticiasRoute: AppNoticiasRoute,
+  AppPerfilRoute: AppPerfilRoute,
+  AppRecursosRoute: AppRecursosRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface WebRouteChildren {
   WebContactoRoute: typeof WebContactoRoute
@@ -293,6 +600,7 @@ const WebRouteWithChildren = WebRoute._addFileChildren(WebRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
   WebRoute: WebRouteWithChildren,
   ApiChatRoute: ApiChatRoute,
