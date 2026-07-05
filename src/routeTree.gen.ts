@@ -9,38 +9,158 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WebRouteImport } from './routes/web'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WebRecursosRouteImport } from './routes/web.recursos'
+import { Route as WebQueEsRouteImport } from './routes/web.que-es'
+import { Route as WebNoticiasRouteImport } from './routes/web.noticias'
+import { Route as WebInstitucionesRouteImport } from './routes/web.instituciones'
+import { Route as WebInicioRouteImport } from './routes/web.inicio'
+import { Route as WebFaqRouteImport } from './routes/web.faq'
+import { Route as WebFamiliasRouteImport } from './routes/web.familias'
+import { Route as WebContactoRouteImport } from './routes/web.contacto'
 
+const WebRoute = WebRouteImport.update({
+  id: '/web',
+  path: '/web',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WebRecursosRoute = WebRecursosRouteImport.update({
+  id: '/recursos',
+  path: '/recursos',
+  getParentRoute: () => WebRoute,
+} as any)
+const WebQueEsRoute = WebQueEsRouteImport.update({
+  id: '/que-es',
+  path: '/que-es',
+  getParentRoute: () => WebRoute,
+} as any)
+const WebNoticiasRoute = WebNoticiasRouteImport.update({
+  id: '/noticias',
+  path: '/noticias',
+  getParentRoute: () => WebRoute,
+} as any)
+const WebInstitucionesRoute = WebInstitucionesRouteImport.update({
+  id: '/instituciones',
+  path: '/instituciones',
+  getParentRoute: () => WebRoute,
+} as any)
+const WebInicioRoute = WebInicioRouteImport.update({
+  id: '/inicio',
+  path: '/inicio',
+  getParentRoute: () => WebRoute,
+} as any)
+const WebFaqRoute = WebFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => WebRoute,
+} as any)
+const WebFamiliasRoute = WebFamiliasRouteImport.update({
+  id: '/familias',
+  path: '/familias',
+  getParentRoute: () => WebRoute,
+} as any)
+const WebContactoRoute = WebContactoRouteImport.update({
+  id: '/contacto',
+  path: '/contacto',
+  getParentRoute: () => WebRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/web': typeof WebRouteWithChildren
+  '/web/contacto': typeof WebContactoRoute
+  '/web/familias': typeof WebFamiliasRoute
+  '/web/faq': typeof WebFaqRoute
+  '/web/inicio': typeof WebInicioRoute
+  '/web/instituciones': typeof WebInstitucionesRoute
+  '/web/noticias': typeof WebNoticiasRoute
+  '/web/que-es': typeof WebQueEsRoute
+  '/web/recursos': typeof WebRecursosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/web': typeof WebRouteWithChildren
+  '/web/contacto': typeof WebContactoRoute
+  '/web/familias': typeof WebFamiliasRoute
+  '/web/faq': typeof WebFaqRoute
+  '/web/inicio': typeof WebInicioRoute
+  '/web/instituciones': typeof WebInstitucionesRoute
+  '/web/noticias': typeof WebNoticiasRoute
+  '/web/que-es': typeof WebQueEsRoute
+  '/web/recursos': typeof WebRecursosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/web': typeof WebRouteWithChildren
+  '/web/contacto': typeof WebContactoRoute
+  '/web/familias': typeof WebFamiliasRoute
+  '/web/faq': typeof WebFaqRoute
+  '/web/inicio': typeof WebInicioRoute
+  '/web/instituciones': typeof WebInstitucionesRoute
+  '/web/noticias': typeof WebNoticiasRoute
+  '/web/que-es': typeof WebQueEsRoute
+  '/web/recursos': typeof WebRecursosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/web'
+    | '/web/contacto'
+    | '/web/familias'
+    | '/web/faq'
+    | '/web/inicio'
+    | '/web/instituciones'
+    | '/web/noticias'
+    | '/web/que-es'
+    | '/web/recursos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/web'
+    | '/web/contacto'
+    | '/web/familias'
+    | '/web/faq'
+    | '/web/inicio'
+    | '/web/instituciones'
+    | '/web/noticias'
+    | '/web/que-es'
+    | '/web/recursos'
+  id:
+    | '__root__'
+    | '/'
+    | '/web'
+    | '/web/contacto'
+    | '/web/familias'
+    | '/web/faq'
+    | '/web/inicio'
+    | '/web/instituciones'
+    | '/web/noticias'
+    | '/web/que-es'
+    | '/web/recursos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  WebRoute: typeof WebRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/web': {
+      id: '/web'
+      path: '/web'
+      fullPath: '/web'
+      preLoaderRoute: typeof WebRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +168,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/web/recursos': {
+      id: '/web/recursos'
+      path: '/recursos'
+      fullPath: '/web/recursos'
+      preLoaderRoute: typeof WebRecursosRouteImport
+      parentRoute: typeof WebRoute
+    }
+    '/web/que-es': {
+      id: '/web/que-es'
+      path: '/que-es'
+      fullPath: '/web/que-es'
+      preLoaderRoute: typeof WebQueEsRouteImport
+      parentRoute: typeof WebRoute
+    }
+    '/web/noticias': {
+      id: '/web/noticias'
+      path: '/noticias'
+      fullPath: '/web/noticias'
+      preLoaderRoute: typeof WebNoticiasRouteImport
+      parentRoute: typeof WebRoute
+    }
+    '/web/instituciones': {
+      id: '/web/instituciones'
+      path: '/instituciones'
+      fullPath: '/web/instituciones'
+      preLoaderRoute: typeof WebInstitucionesRouteImport
+      parentRoute: typeof WebRoute
+    }
+    '/web/inicio': {
+      id: '/web/inicio'
+      path: '/inicio'
+      fullPath: '/web/inicio'
+      preLoaderRoute: typeof WebInicioRouteImport
+      parentRoute: typeof WebRoute
+    }
+    '/web/faq': {
+      id: '/web/faq'
+      path: '/faq'
+      fullPath: '/web/faq'
+      preLoaderRoute: typeof WebFaqRouteImport
+      parentRoute: typeof WebRoute
+    }
+    '/web/familias': {
+      id: '/web/familias'
+      path: '/familias'
+      fullPath: '/web/familias'
+      preLoaderRoute: typeof WebFamiliasRouteImport
+      parentRoute: typeof WebRoute
+    }
+    '/web/contacto': {
+      id: '/web/contacto'
+      path: '/contacto'
+      fullPath: '/web/contacto'
+      preLoaderRoute: typeof WebContactoRouteImport
+      parentRoute: typeof WebRoute
+    }
   }
 }
 
+interface WebRouteChildren {
+  WebContactoRoute: typeof WebContactoRoute
+  WebFamiliasRoute: typeof WebFamiliasRoute
+  WebFaqRoute: typeof WebFaqRoute
+  WebInicioRoute: typeof WebInicioRoute
+  WebInstitucionesRoute: typeof WebInstitucionesRoute
+  WebNoticiasRoute: typeof WebNoticiasRoute
+  WebQueEsRoute: typeof WebQueEsRoute
+  WebRecursosRoute: typeof WebRecursosRoute
+}
+
+const WebRouteChildren: WebRouteChildren = {
+  WebContactoRoute: WebContactoRoute,
+  WebFamiliasRoute: WebFamiliasRoute,
+  WebFaqRoute: WebFaqRoute,
+  WebInicioRoute: WebInicioRoute,
+  WebInstitucionesRoute: WebInstitucionesRoute,
+  WebNoticiasRoute: WebNoticiasRoute,
+  WebQueEsRoute: WebQueEsRoute,
+  WebRecursosRoute: WebRecursosRoute,
+}
+
+const WebRouteWithChildren = WebRoute._addFileChildren(WebRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  WebRoute: WebRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
