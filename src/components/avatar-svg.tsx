@@ -11,9 +11,8 @@ export type AvatarConfig = {
   mood?: "happy" | "calm" | "excited" | "thinking" | "surprised" | "cool";
 };
 
-// Catálogo ampliado de opciones para soportar el nuevo sistema progresivo de desbloqueos
 export const AVATAR_OPTIONS = {
-  skin: ["#F5D6BA", "#EAC199", "#D9A574", "#B67F4F", "#8A5A3B", "#5C3A22"],
+  skin: ["#FCE0C7", "#F5CBA0", "#E0A97F", "#B67F4F", "#8A5A3B", "#5C3A22"],
   hair: ["short", "long", "curly", "ponytail", "buns", "spiky", "braids", "bald"],
   hairColor: ["#2C1810", "#5C3A22", "#B67F4F", "#E8B860", "#C97A9A", "#7A9AC9", "#9A7AC9", "#FE5F55"],
   eyes: ["normal", "happy", "wink", "sparkle", "star", "anime-sad"],
@@ -21,6 +20,12 @@ export const AVATAR_OPTIONS = {
   outfitColor: ["#8FB4E8", "#F3B4C6", "#B0DFC9", "#C7B4EA", "#F5D488", "#F19B84", "#222222", "#FFFFFF"],
   accessory: ["none", "glasses", "cap", "headphones", "earrings", "scarf", "crown"],
 } as const;
+
+// ============================================================
+//  CHIBI TOCA-BOCA STYLE AVATAR
+//  Proporciones: cabeza ENORME (~55% del alto), cuerpo pequeño,
+//  brazos y piernas cortos. Ojos gigantes con brillos.
+// ============================================================
 
 export function AvatarSVG({ config, size = 160 }: { config: AvatarConfig; size?: number }) {
   const c = useMemo(() => ({
@@ -34,261 +39,248 @@ export function AvatarSVG({ config, size = 160 }: { config: AvatarConfig; size?:
     mood: config.mood ?? "happy",
   }), [config]);
 
-  const strokeProps = {
-    stroke: "#1A1A1A",
-    strokeWidth: "3",
-    strokeLinejoin: "round" as const,
-    strokeLinecap: "round" as const,
-  };
+  const S = { stroke: "#2A1B14", strokeWidth: 2.5, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
+  const thin = { stroke: "#2A1B14", strokeWidth: 1.8, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
 
   return (
-    <svg 
-      viewBox="10 10 180 270" 
-      width={size} 
-      height={size} 
-      className="drop-shadow-sm w-full h-full object-contain block"
-    >
-      <rect x="10" y="10" width="180" height="270" fill="none" />
-
-      {/* DETRÁS DEL CUERPO: Cabello Trasero */}
+    <svg viewBox="0 0 200 260" width={size} height={size} className="w-full h-full object-contain block drop-shadow-sm">
+      {/* ================= CABELLO TRASERO ================= */}
       {c.hair === "long" && (
-        <path d="M48 70 Q15 130 35 180 Q100 195 165 180 Q185 130 152 70 Z" fill={c.hairColor} {...strokeProps} />
+        <path d="M30 90 Q10 170 40 235 L70 235 Q55 185 60 130 Z M170 90 Q190 170 160 235 L130 235 Q145 185 140 130 Z" fill={c.hairColor} {...S} />
       )}
       {c.hair === "ponytail" && (
-        <g transform="translate(35, 25)">
-          <path d="M115 50 C155 30 180 65 165 110 C135 135 115 100 115 70 Z" fill={c.hairColor} {...strokeProps} />
-        </g>
-      )}
-      {c.hair === "buns" && (
-        <g>
-          <circle cx="50" cy="40" r="24" fill={c.hairColor} {...strokeProps} />
-          <circle cx="150" cy="40" r="24" fill={c.hairColor} {...strokeProps} />
-        </g>
+        <path d="M155 70 C195 60 205 130 175 155 C160 145 150 120 150 95 Z" fill={c.hairColor} {...S} />
       )}
       {c.hair === "braids" && (
+        <>
+          <path d="M42 110 Q22 170 40 220 Q52 225 58 215 Q45 175 60 125 Z" fill={c.hairColor} {...S} />
+          <path d="M158 110 Q178 170 160 220 Q148 225 142 215 Q155 175 140 125 Z" fill={c.hairColor} {...S} />
+        </>
+      )}
+
+      {/* ================= PIERNAS ================= */}
+      {c.outfit === "dress" ? (
+        <>
+          <rect x="82" y="200" width="12" height="38" rx="5" fill={c.skin} {...S} />
+          <rect x="106" y="200" width="12" height="38" rx="5" fill={c.skin} {...S} />
+        </>
+      ) : (
+        <>
+          <rect x="80" y="196" width="16" height="42" rx="6" fill={c.outfit === "overalls" ? c.outfitColor : "#3A5B8C"} {...S} />
+          <rect x="104" y="196" width="16" height="42" rx="6" fill={c.outfit === "overalls" ? c.outfitColor : "#3A5B8C"} {...S} />
+        </>
+      )}
+      {/* Zapatos */}
+      <ellipse cx="88" cy="242" rx="12" ry="7" fill="#FFFFFF" {...S} />
+      <ellipse cx="112" cy="242" rx="12" ry="7" fill="#FFFFFF" {...S} />
+      <path d="M76 242 L100 242 M100 242 L124 242" stroke="#2A1B14" strokeWidth="1.5" />
+
+      {/* ================= CUERPO ================= */}
+      {c.outfit === "dress" ? (
+        <path d="M70 172 Q100 165 130 172 L140 205 Q100 215 60 205 Z" fill={c.outfitColor} {...S} />
+      ) : c.outfit === "jacket" ? (
+        <>
+          <path d="M70 168 Q100 162 130 168 L134 200 Q100 208 66 200 Z" fill={c.outfitColor} {...S} />
+          <line x1="100" y1="170" x2="100" y2="204" stroke="#2A1B14" strokeWidth="2" />
+          <path d="M84 172 L100 188 L116 172" fill="none" stroke="#2A1B14" strokeWidth="2" />
+        </>
+      ) : c.outfit === "sweater" ? (
+        <>
+          <path d="M70 168 Q100 162 130 168 L134 202 Q100 210 66 202 Z" fill={c.outfitColor} {...S} />
+          <path d="M74 180 Q100 188 126 180" fill="none" stroke="#2A1B14" strokeWidth="1.5" opacity="0.6" />
+        </>
+      ) : c.outfit === "overalls" ? (
+        <>
+          <path d="M72 168 Q100 162 128 168 L130 202 Q100 210 70 202 Z" fill="#FFFFFF" {...S} />
+          <path d="M78 172 Q100 168 122 172 L126 202 Q100 208 74 202 Z" fill={c.outfitColor} {...S} />
+          <circle cx="86" cy="180" r="2" fill="#2A1B14" />
+          <circle cx="114" cy="180" r="2" fill="#2A1B14" />
+        </>
+      ) : c.outfit === "hoodie" ? (
+        <>
+          <path d="M68 168 Q100 160 132 168 L136 202 Q100 210 64 202 Z" fill={c.outfitColor} {...S} />
+          <path d="M82 168 Q100 180 118 168" fill="none" stroke="#2A1B14" strokeWidth="2" />
+          <line x1="94" y1="172" x2="94" y2="186" stroke="#2A1B14" strokeWidth="1.5" />
+          <line x1="106" y1="172" x2="106" y2="186" stroke="#2A1B14" strokeWidth="1.5" />
+        </>
+      ) : (
+        <path d="M70 168 Q100 162 130 168 L134 200 Q100 208 66 200 Z" fill={c.outfitColor} {...S} />
+      )}
+
+      {/* ================= BRAZOS ================= */}
+      <g>
+        <path d="M66 172 Q54 178 52 200 Q52 208 60 208 Q68 206 70 198 Z" fill={c.outfit === "dress" ? c.skin : c.outfitColor} {...S} />
+        <path d="M134 172 Q146 178 148 200 Q148 208 140 208 Q132 206 130 198 Z" fill={c.outfit === "dress" ? c.skin : c.outfitColor} {...S} />
+        {/* Manos */}
+        <circle cx="59" cy="209" r="7" fill={c.skin} {...S} />
+        <circle cx="141" cy="209" r="7" fill={c.skin} {...S} />
+      </g>
+
+      {/* ================= CUELLO ================= */}
+      <rect x="92" y="152" width="16" height="16" rx="4" fill={c.skin} {...S} />
+
+      {/* ================= CABEZA (grande, redonda) ================= */}
+      <ellipse cx="100" cy="88" rx="68" ry="72" fill={c.skin} {...S} />
+
+      {/* Rubor gigante estilo chibi */}
+      <ellipse cx="60" cy="112" rx="12" ry="8" fill="#FF9BB8" opacity="0.7" />
+      <ellipse cx="140" cy="112" rx="12" ry="8" fill="#FF9BB8" opacity="0.7" />
+
+      {/* ================= OJOS ================= */}
+      {c.eyes === "normal" && (
         <g>
-          <path d="M44 80 Q25 140 35 200" fill="none" stroke={c.hairColor} strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M156 80 Q175 140 165 200" fill="none" stroke={c.hairColor} strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
+          {/* Contorno negro */}
+          <ellipse cx="76" cy="98" rx="14" ry="19" fill="#2A1B14" />
+          <ellipse cx="124" cy="98" rx="14" ry="19" fill="#2A1B14" />
+          {/* Iris coloreado */}
+          <ellipse cx="76" cy="100" rx="10" ry="15" fill={c.hairColor} />
+          <ellipse cx="124" cy="100" rx="10" ry="15" fill={c.hairColor} />
+          {/* Brillo grande */}
+          <ellipse cx="72" cy="92" rx="5" ry="6" fill="#FFFFFF" />
+          <ellipse cx="120" cy="92" rx="5" ry="6" fill="#FFFFFF" />
+          {/* Brillo pequeño inferior */}
+          <circle cx="80" cy="107" r="2.5" fill="#FFFFFF" />
+          <circle cx="128" cy="107" r="2.5" fill="#FFFFFF" />
+          {/* Punto de reflejo */}
+          <circle cx="68" cy="96" r="1.2" fill="#FFFFFF" opacity="0.9" />
+          <circle cx="116" cy="96" r="1.2" fill="#FFFFFF" opacity="0.9" />
+          {/* Pestañas */}
+          <path d="M62 82 Q66 78 72 80 M90 82 Q86 78 80 80" fill="none" {...thin} />
+          <path d="M110 82 Q114 78 120 80 M138 82 Q134 78 128 80" fill="none" {...thin} />
+        </g>
+      )}
+      {c.eyes === "happy" && (
+        <g>
+          <path d="M62 100 Q76 82 90 100" fill="none" stroke="#2A1B14" strokeWidth="4.5" strokeLinecap="round" />
+          <path d="M110 100 Q124 82 138 100" fill="none" stroke="#2A1B14" strokeWidth="4.5" strokeLinecap="round" />
+        </g>
+      )}
+      {c.eyes === "wink" && (
+        <g>
+          <ellipse cx="76" cy="98" rx="14" ry="19" fill="#2A1B14" />
+          <ellipse cx="76" cy="100" rx="10" ry="15" fill={c.hairColor} />
+          <ellipse cx="72" cy="92" rx="5" ry="6" fill="#FFFFFF" />
+          <circle cx="80" cy="107" r="2.5" fill="#FFFFFF" />
+          <path d="M110 100 Q124 82 138 100" fill="none" stroke="#2A1B14" strokeWidth="4.5" strokeLinecap="round" />
+        </g>
+      )}
+      {c.eyes === "sparkle" && (
+        <g>
+          <ellipse cx="76" cy="98" rx="14" ry="19" fill="#2A1B14" />
+          <ellipse cx="124" cy="98" rx="14" ry="19" fill="#2A1B14" />
+          <polygon points="76,84 79,94 89,97 79,100 76,110 73,100 63,97 73,94" fill="#FFFFFF" />
+          <polygon points="124,84 127,94 137,97 127,100 124,110 121,100 111,97 121,94" fill="#FFFFFF" />
+        </g>
+      )}
+      {c.eyes === "star" && (
+        <g>
+          <ellipse cx="76" cy="98" rx="14" ry="14" fill="#F5D488" {...S} />
+          <polygon points="76,86 80,94 88,95 82,101 84,109 76,105 68,109 70,101 64,95 72,94" fill="#FFFFFF" />
+          <ellipse cx="124" cy="98" rx="14" ry="14" fill="#F5D488" {...S} />
+          <polygon points="124,86 128,94 136,95 130,101 132,109 124,105 116,109 118,101 112,95 120,94" fill="#FFFFFF" />
+        </g>
+      )}
+      {c.eyes === "anime-sad" && (
+        <g>
+          <ellipse cx="76" cy="98" rx="13" ry="17" fill="#2A1B14" />
+          <ellipse cx="124" cy="98" rx="13" ry="17" fill="#2A1B14" />
+          <ellipse cx="76" cy="100" rx="9" ry="13" fill="#7EAEE0" />
+          <ellipse cx="124" cy="100" rx="9" ry="13" fill="#7EAEE0" />
+          <ellipse cx="72" cy="92" rx="4" ry="5" fill="#FFFFFF" />
+          <ellipse cx="120" cy="92" rx="4" ry="5" fill="#FFFFFF" />
+          <path d="M72 118 Q74 128 78 122" fill="#8FB4E8" opacity="0.8" />
+          <path d="M120 118 Q122 128 126 122" fill="#8FB4E8" opacity="0.8" />
         </g>
       )}
 
-      {/* ACCESORIO TRASERO: Bufanda (Parte trasera) */}
-      {c.accessory === "scarf" && (
-        <path d="M74 136 Q100 150 126 136 L134 165 Q100 175 66 165 Z" fill="#FE5F55" {...strokeProps} />
+      {/* Nariz sutil */}
+      <path d="M99 118 Q100 122 101 118" fill="none" stroke="#2A1B14" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+
+      {/* ================= BOCA ================= */}
+      {c.mood === "happy" && (
+        <path d="M92 128 Q100 138 108 128" fill="#B85B7A" stroke="#2A1B14" strokeWidth="2" strokeLinecap="round" />
+      )}
+      {c.mood === "calm" && (
+        <path d="M94 130 Q100 132 106 130" fill="none" stroke="#2A1B14" strokeWidth="2.2" strokeLinecap="round" />
+      )}
+      {c.mood === "excited" && (
+        <path d="M90 126 Q100 144 110 126 Q100 132 90 126 Z" fill="#B85B7A" stroke="#2A1B14" strokeWidth="2" />
+      )}
+      {c.mood === "thinking" && (
+        <path d="M94 130 Q100 126 106 129" fill="none" stroke="#2A1B14" strokeWidth="2.2" strokeLinecap="round" />
+      )}
+      {c.mood === "surprised" && (
+        <ellipse cx="100" cy="130" rx="4" ry="5" fill="#B85B7A" stroke="#2A1B14" strokeWidth="2" />
+      )}
+      {c.mood === "cool" && (
+        <path d="M92 128 Q100 125 108 128" fill="none" stroke="#2A1B14" strokeWidth="2.4" strokeLinecap="round" />
       )}
 
-      {/* PIES Y ZAPATOS */}
-      <g>
-        <path d="M70 255 C70 245 88 245 92 255 L92 265 C92 268 70 268 70 265 Z" fill="#FFF" {...strokeProps} />
-        <path d="M70 260 L92 260" fill="none" stroke="#1A1A1A" strokeWidth="2" />
-        <path d="M108 255 C108 245 126 245 130 255 L130 265 C130 268 108 268 108 265 Z" fill="#FFF" {...strokeProps} />
-        <path d="M108 260 L130 260" fill="none" stroke="#1A1A1A" strokeWidth="2" />
-      </g>
+      {/* ================= CABELLO DELANTERO ================= */}
+      {c.hair === "short" && (
+        <path d="M34 90 Q30 30 100 22 Q170 30 166 90 Q145 60 128 68 Q114 50 100 58 Q86 50 72 68 Q55 60 34 90 Z" fill={c.hairColor} {...S} />
+      )}
+      {c.hair === "long" && (
+        <path d="M32 92 Q30 28 100 20 Q170 28 168 92 Q148 62 130 72 Q114 50 100 60 Q86 50 70 72 Q52 62 32 92 Z" fill={c.hairColor} {...S} />
+      )}
+      {c.hair === "curly" && (
+        <path d="M32 96 C20 60 44 32 72 42 C82 22 118 22 128 42 C156 32 180 60 168 96 C150 74 136 82 122 68 C108 54 92 54 78 68 C64 82 50 74 32 96 Z" fill={c.hairColor} {...S} />
+      )}
+      {c.hair === "ponytail" && (
+        <path d="M34 90 Q30 30 100 22 Q170 30 166 90 Q145 60 128 68 Q114 50 100 58 Q86 50 72 68 Q55 60 34 90 Z" fill={c.hairColor} {...S} />
+      )}
+      {c.hair === "buns" && (
+        <>
+          <circle cx="46" cy="40" r="22" fill={c.hairColor} {...S} />
+          <circle cx="154" cy="40" r="22" fill={c.hairColor} {...S} />
+          <path d="M40 88 Q34 40 100 32 Q166 40 160 88 Q142 62 126 70 Q112 52 100 60 Q88 52 74 70 Q58 62 40 88 Z" fill={c.hairColor} {...S} />
+        </>
+      )}
+      {c.hair === "spiky" && (
+        <path d="M34 92 L28 62 L48 68 L58 42 L76 58 L100 30 L124 58 L142 42 L152 68 L172 62 L166 92 Q100 68 34 92 Z" fill={c.hairColor} {...S} />
+      )}
+      {c.hair === "braids" && (
+        <path d="M34 90 Q30 30 100 22 Q170 30 166 90 Q145 60 128 68 Q114 50 100 58 Q86 50 72 68 Q55 60 34 90 Z" fill={c.hairColor} {...S} />
+      )}
 
-      {/* PIERNAS */}
-      <g>
-        {c.outfit === "dress" ? (
-          <>
-            <rect x="76" y="185" width="14" height="72" fill={c.skin} {...strokeProps} />
-            <rect x="110" y="185" width="14" height="72" fill={c.skin} {...strokeProps} />
-          </>
-        ) : (
-          <>
-            <path d="M74 174 L70 255 L88 255 L94 185 Z" fill="#93BBE6" {...strokeProps} />
-            <path d="M126 174 L130 255 L112 255 L106 185 Z" fill="#93BBE6" {...strokeProps} />
-            <rect x="70" y="250" width="18" height="5" fill="#EAEAEA" stroke="#1A1A1A" strokeWidth="2" />
-            <rect x="112" y="250" width="18" height="5" fill="#EAEAEA" stroke="#1A1A1A" strokeWidth="2" />
-          </>
-        )}
-      </g>
-
-      {/* BRAZOS */}
-      <g>
-        <path d="M54 135 L44 200 Q44 208 52 208 Q60 208 58 200 L64 145 Z" fill={c.skin} {...strokeProps} />
-        <path d="M146 135 L156 200 Q156 208 148 208 Q140 208 142 200 L136 145 Z" fill={c.skin} {...strokeProps} />
-        {c.outfit !== "dress" && (
-          <>
-            <path d="M54 135 L45 188 L57 188 L62 142 Z" fill={c.outfitColor} {...strokeProps} />
-            <path d="M146 135 L155 188 L143 188 L138 142 Z" fill={c.outfitColor} {...strokeProps} />
-          </>
-        )}
-      </g>
-
-      {/* CUERPO PRINCIPAL (Ropa Ampliada) */}
-      <g>
-        {c.outfit === "dress" ? (
-          <path d="M62 134 L50 195 L150 195 L138 134 Z" fill={c.outfitColor} {...strokeProps} />
-        ) : c.outfit === "jacket" ? (
-          <>
-            <path d="M58 134 L54 182 L146 182 L142 134 Z" fill={c.outfitColor} {...strokeProps} />
-            <line x1="100" y1="134" x2="100" y2="182" stroke="#1A1A1A" strokeWidth="2.5" />
-            <path d="M92 134 L100 155 L108 134" fill="none" stroke="#1A1A1A" strokeWidth="2.5" />
-          </>
-        ) : c.outfit === "sweater" ? (
-          <>
-            <path d="M58 134 L54 184 L146 184 L142 134 Z" fill={c.outfitColor} {...strokeProps} />
-            <path d="M64 145 Q100 155 136 145" fill="none" stroke="#1A1A1A" strokeWidth="2" />
-          </>
-        ) : c.outfit === "overalls" ? (
-          <>
-            <path d="M58 134 L54 180 L146 180 L142 134 Z" fill="#FFF" {...strokeProps} />
-            <path d="M66 134 L62 180 L138 180 L134 134 Z" fill={c.outfitColor} {...strokeProps} />
-            <rect x="74" y="142" width="10" height="12" fill="#1A1A1A" rx="2" />
-            <rect x="116" y="142" width="10" height="12" fill="#1A1A1A" rx="2" />
-          </>
-        ) : (
-          <path d="M58 134 L54 180 L146 180 L142 134 Z" fill={c.outfitColor} {...strokeProps} />
-        )}
-
-        {/* Detalles específicos del Hoodie original */}
-        {c.outfit === "hoodie" && (
-          <>
-            <path d="M76 134 Q100 148 124 134" fill="none" stroke="#1A1A1A" strokeWidth="2.5" />
-            <line x1="94" y1="138" x2="94" y2="152" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round" />
-            <line x1="106" y1="138" x2="106" y2="152" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round" />
-          </>
-        )}
-      </g>
-
-      {/* CUELLO */}
-      <rect x="93" y="118" width="14" height="20" fill={c.skin} {...strokeProps} />
-
-      {/* CABEZA */}
-      <rect x="48" y="36" width="104" height="96" rx="46" fill={c.skin} {...strokeProps} />
-      <ellipse cx="64" cy="108" rx="13" ry="7" fill="#FF94B8" opacity="0.55" />
-      <ellipse cx="136" cy="108" rx="13" ry="7" fill="#FF94B8" opacity="0.55" />
-      {/* Nariz sutil */}
-      <path d="M99 100 Q100 104 101 100" fill="none" stroke="#1A1A1A" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
-
-      {/* OJOS */}
-      <g>
-        {c.eyes === "normal" && (
-          <>
-            {/* Ojos grandes estilo anime chibi */}
-            <ellipse cx="72" cy="93" rx="13" ry="17" fill="#1A1A1A" stroke="#1A1A1A" strokeWidth="2" />
-            <ellipse cx="72" cy="94" rx="10" ry="14" fill={c.hairColor} opacity="0.85" />
-            <circle cx="69" cy="87" r="5" fill="#FFF" />
-            <circle cx="75" cy="99" r="2.5" fill="#FFF" />
-            <circle cx="66" cy="92" r="1.5" fill="#FFF" opacity="0.8" />
-            <ellipse cx="128" cy="93" rx="13" ry="17" fill="#1A1A1A" stroke="#1A1A1A" strokeWidth="2" />
-            <ellipse cx="128" cy="94" rx="10" ry="14" fill={c.hairColor} opacity="0.85" />
-            <circle cx="125" cy="87" r="5" fill="#FFF" />
-            <circle cx="131" cy="99" r="2.5" fill="#FFF" />
-            <circle cx="122" cy="92" r="1.5" fill="#FFF" opacity="0.8" />
-          </>
-        )}
-        {c.eyes === "happy" && (
-          <>
-            <path d="M62 93 Q73 78 84 93" fill="none" stroke="#1A1A1A" strokeWidth="5" strokeLinecap="round" />
-            <path d="M116 93 Q127 78 138 93" fill="none" stroke="#1A1A1A" strokeWidth="5" strokeLinecap="round" />
-          </>
-        )}
-        {c.eyes === "wink" && (
-          <>
-            <ellipse cx="73" cy="91" rx="10" ry="13" fill="#1A1A1A" />
-            <circle cx="71" cy="85" r="4" fill="#FFF" />
-            <circle cx="76" cy="95" r="1.5" fill="#FFF" />
-            <path d="M116 91 Q127 76 138 91" fill="none" stroke="#1A1A1A" strokeWidth="5" strokeLinecap="round" />
-          </>
-        )}
-        {c.eyes === "sparkle" && (
-          <>
-            <ellipse cx="73" cy="91" rx="10" ry="13" fill="#1A1A1A" />
-            <path d="M73 82 L75 88 L81 88 L76 91 L78 97 L73 94 L68 97 L70 91 L65 88 L71 88 Z" fill="#FFF" />
-            <ellipse cx="127" cy="91" rx="10" ry="13" fill="#1A1A1A" />
-            <path d="M127 82 L129 88 L135 88 L130 91 L132 97 L127 94 L122 97 L124 91 L119 88 L125 88 Z" fill="#FFF" />
-          </>
-        )}
-        {c.eyes === "star" && (
-          <>
-            <ellipse cx="73" cy="91" rx="11" ry="11" fill="#F5D488" {...strokeProps} />
-            <polygon points="73,83 76,88 82,89 77,93 79,99 73,96 67,99 69,93 64,89 70,88" fill="#FFF" />
-            <ellipse cx="127" cy="91" rx="11" ry="11" fill="#F5D488" {...strokeProps} />
-            <polygon points="127,83 130,88 136,89 131,93 133,99 127,96 121,99 123,93 118,89 124,88" fill="#FFF" />
-          </>
-        )}
-        {c.eyes === "anime-sad" && (
-          <>
-            <ellipse cx="73" cy="91" rx="10" ry="13" fill="#1A1A1A" />
-            <path d="M65 84 Q73 90 81 84" fill="none" stroke="#1A1A1A" strokeWidth="2.5" />
-            <rect x="68" y="94" width="10" height="12" fill="#8FB4E8" opacity="0.7" rx="3" />
-            <ellipse cx="127" cy="91" rx="10" ry="13" fill="#1A1A1A" />
-            <path d="M119 84 Q127 90 135 84" fill="none" stroke="#1A1A1A" strokeWidth="2.5" />
-            <rect x="122" y="94" width="10" height="12" fill="#8FB4E8" opacity="0.7" rx="3" />
-          </>
-        )}
-      </g>
-
-      {/* EXP-MOOD BOCA */}
-      <g>
-        {c.mood === "happy" && <path d="M93 106 Q100 115 107 106" fill="none" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />}
-        {c.mood === "calm" && <line x1="94" y1="108" x2="106" y2="108" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />}
-        {c.mood === "excited" && <path d="M92 104 Q100 122 108 104 Z" fill="#FF6B8B" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />}
-        {c.mood === "thinking" && <path d="M94 109 Q100 104 106 107" fill="none" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" />}
-        {c.mood === "surprised" && <circle cx="100" cy="108" r="6" fill="none" stroke="#1A1A1A" strokeWidth="3" />}
-        {c.mood === "cool" && <path d="M93 105 Q100 102 107 105" fill="none" stroke="#1A1A1A" strokeWidth="3.5" strokeLinecap="round" />}
-      </g>
-
-      {/* PEINADOS */}
-      <g>
-        {c.hair === "short" && (
-          <path d="M48 70 Q40 30 100 28 Q160 30 152 70 Q132 45 116 55 Q100 40 84 55 Q68 45 48 70 Z" fill={c.hairColor} {...strokeProps} />
-        )}
-        {c.hair === "long" && (
-          <path d="M48 70 Q40 30 100 28 Q160 30 152 70 Q134 48 121 55 Q100 38 79 55 Q66 48 48 70 Z" fill={c.hairColor} {...strokeProps} />
-        )}
-        {c.hair === "curly" && (
-          <path d="M46 70 C34 42 56 20 78 32 C89 15 111 15 122 32 C144 20 166 42 154 70 C138 52 127 58 116 50 C100 38 84 50 74 50 C63 58 55 52 46 70 Z" fill={c.hairColor} {...strokeProps} />
-        )}
-        {c.hair === "ponytail" && (
-          <path d="M48 70 Q40 30 100 28 Q160 30 152 70 Q132 45 116 55 Q100 40 84 55 Q68 45 48 70 Z" fill={c.hairColor} {...strokeProps} />
-        )}
-        {c.hair === "buns" && (
-          <path d="M48 70 Q40 35 100 32 Q160 35 152 70 Q132 48 116 55 Q100 42 84 55 Q68 48 48 70 Z" fill={c.hairColor} {...strokeProps} />
-        )}
-        {c.hair === "spiky" && (
-          <path d="M46 72 L42 50 L56 55 L62 38 L76 48 L100 30 L124 48 L138 38 L144 55 L158 50 L154 72 Q100 50 46 72 Z" fill={c.hairColor} {...strokeProps} />
-        )}
-        {c.hair === "braids" && (
-          <path d="M48 70 Q40 30 100 28 Q160 30 152 70 Q132 45 116 55 Q100 40 84 55 Q68 45 48 70 Z" fill={c.hairColor} {...strokeProps} />
-        )}
-      </g>
-
-      {/* ACCESORIOS */}
-      <g>
-        {c.accessory === "glasses" && (
-          <>
-            <circle cx="74" cy="92" r="17" fill="none" stroke="#1A1A1A" strokeWidth="3.5" />
-            <circle cx="126" cy="92" r="17" fill="none" stroke="#1A1A1A" strokeWidth="3.5" />
-            <line x1="91" y1="92" x2="109" y2="92" stroke="#1A1A1A" strokeWidth="3.5" />
-          </>
-        )}
-        {c.accessory === "cap" && (
-          <g>
-            <path d="M52 52 Q100 12 148 52 Z" fill="#7A9AC9" {...strokeProps} />
-            <path d="M132 48 Q174 48 185 58 L148 58 Z" fill="#6585B2" {...strokeProps} />
-          </g>
-        )}
-        {c.accessory === "headphones" && (
-          <>
-            <path d="M50 70 Q50 24 100 24 Q150 24 150 70" fill="none" stroke="#8B7EF1" strokeWidth="8" strokeLinecap="round" />
-            <rect x="41" y="68" width="15" height="28" rx="7" fill="#8B7EF1" {...strokeProps} />
-            <rect x="144" y="68" width="15" height="28" rx="7" fill="#8B7EF1" {...strokeProps} />
-          </>
-        )}
-        {c.accessory === "earrings" && (
-          <>
-            <circle cx="44" cy="100" r="4.5" fill="#F5C842" {...strokeProps} />
-            <circle cx="156" cy="100" r="4.5" fill="#F5C842" {...strokeProps} />
-          </>
-        )}
-        {c.accessory === "scarf" && (
-          <path d="M68 134 Q100 146 132 134 Q138 155 124 160 L120 195 L102 195 L106 158 Q100 158 94 158 L90 185 L74 185 Z" fill="#FE5F55" {...strokeProps} />
-        )}
-        {c.accessory === "crown" && (
-          <polygon points="68,36 76,20 88,32 100,14 112,32 124,20 132,36" fill="#F5D488" {...strokeProps} />
-        )}
-      </g>
+      {/* ================= ACCESORIOS ================= */}
+      {c.accessory === "glasses" && (
+        <g>
+          <circle cx="76" cy="100" r="18" fill="none" stroke="#2A1B14" strokeWidth="3" />
+          <circle cx="124" cy="100" r="18" fill="none" stroke="#2A1B14" strokeWidth="3" />
+          <line x1="94" y1="100" x2="106" y2="100" stroke="#2A1B14" strokeWidth="3" />
+        </g>
+      )}
+      {c.accessory === "cap" && (
+        <g>
+          <path d="M36 56 Q100 8 164 56 Q140 42 100 42 Q60 42 36 56 Z" fill="#E85D75" {...S} />
+          <path d="M140 54 Q186 56 194 66 L156 62 Z" fill="#C4425A" {...S} />
+        </g>
+      )}
+      {c.accessory === "headphones" && (
+        <g>
+          <path d="M34 88 Q34 22 100 20 Q166 22 166 88" fill="none" stroke="#8B7EF1" strokeWidth="8" strokeLinecap="round" />
+          <rect x="24" y="82" width="18" height="30" rx="8" fill="#8B7EF1" {...S} />
+          <rect x="158" y="82" width="18" height="30" rx="8" fill="#8B7EF1" {...S} />
+        </g>
+      )}
+      {c.accessory === "earrings" && (
+        <>
+          <circle cx="32" cy="115" r="5" fill="#F5C842" {...S} />
+          <circle cx="168" cy="115" r="5" fill="#F5C842" {...S} />
+        </>
+      )}
+      {c.accessory === "scarf" && (
+        <path d="M64 152 Q100 168 136 152 Q142 178 124 180 L118 200 L108 200 L112 182 Q100 184 88 182 L92 200 L82 200 L76 180 Q58 178 64 152 Z" fill="#FE5F55" {...S} />
+      )}
+      {c.accessory === "crown" && (
+        <g>
+          <polygon points="58,32 70,12 84,28 100,6 116,28 130,12 142,32" fill="#F5D488" {...S} />
+          <circle cx="70" cy="14" r="2.5" fill="#FE5F55" />
+          <circle cx="100" cy="8" r="2.5" fill="#7EAEE0" />
+          <circle cx="130" cy="14" r="2.5" fill="#B0DFC9" />
+        </g>
+      )}
     </svg>
   );
 }
