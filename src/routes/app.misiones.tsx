@@ -45,10 +45,24 @@ function MissionsPage() {
     qc.invalidateQueries();
   }
 
-  // Manejador del clic que redirige en lugar de completar directamente
+  // Manejador del clic seguro para redirigir dinámicamente evitando el estricto "Not Found" de TanStack
   function handleMissionClick(m: any) {
-    const targetRoute = m.route || m.slug || m.url || `/app/misiones/${m.id}`;
-    navigate({ to: targetRoute });
+    // Determinar la ruta destino priorizando lo que venga de la base de datos
+    const targetRoute = m.route || m.slug || m.url;
+
+    if (!targetRoute) {
+      toast.error("Esta misión no tiene una ruta de actividad configurada.");
+      return;
+    }
+
+    try {
+      // Intentamos usar el sistema de navegación nativo del navegador para rutas dinámicas externas/nuevas
+      // Esto evita que TanStack Router lance un error fatal si la ruta aún no está registrada en su árbol estricto
+      window.location.href = targetRoute;
+    } catch (err) {
+      // Respaldo por si falla la redirección nativa
+      navigate({ to: targetRoute as any });
+    }
   }
 
   return (
@@ -66,7 +80,11 @@ function MissionsPage() {
                 <div className="font-bold">{m.title}</div>
                 <div className="text-xs text-muted-foreground">{m.description}</div>
               </div>
-              <button onClick={() => handleMissionClick(m)} disabled={isDone} className={`rounded-full px-3 py-2 text-xs font-bold ${isDone ? "bg-secondary" : "bg-primary text-primary-foreground shadow-soft"}`}>
+              <button 
+                onClick={() => handleMissionClick(m)} 
+                disabled={isDone} 
+                className={`rounded-full px-3 py-2 text-xs font-bold ${isDone ? "bg-secondary" : "bg-primary text-primary-foreground shadow-soft"}`}
+              >
                 {isDone ? <Check className="h-4 w-4" /> : "Completar"}
               </button>
             </div>
