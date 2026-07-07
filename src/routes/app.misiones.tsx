@@ -33,6 +33,7 @@ function MissionsPage() {
     queryFn: async () => (await supabase.from("mission_progress").select("mission_id,period_key").eq("user_id", user!.id)).data ?? [],
   });
 
+  // Esta función se queda intacta en el archivo para tu referencia o si la importas en tus pantallas
   async function complete(m: any) {
     if (!user || !profile) return;
     const pk = periodKey(m.frequency);
@@ -44,25 +45,15 @@ function MissionsPage() {
     qc.invalidateQueries();
   }
 
+  // Lógica de navegación limpia sugerida por la auditoría del ZIP
   function handleMissionClick(m: any) {
-    let targetRoute = m.route || m.slug || m.url;
-
-    if (!targetRoute) {
-      toast.error("Esta misión no tiene una ruta configurada.");
+    if (!m.route) {
+      toast.error("Esta misión no tiene una ruta configurada en la base de datos.");
       return;
     }
 
-    // AUTO-CONVERSIÓN: Si la ruta en la BD tiene puntos (ej: app.juegos.trivia), 
-    // la transforma a formato URL (ej: /app/juegos/trivia)
-    if (targetRoute.includes(".")) {
-      targetRoute = targetRoute.replace(/\./g, "/");
-    }
-    if (!targetRoute.startsWith("/")) {
-      targetRoute = "/" + targetRoute;
-    }
-
-    // Navegación forzada directa
-    window.location.href = targetRoute;
+    // Navega directamente usando el Router de TanStack hacia la URL real (Ej: /app/juegos/trivia)
+    navigate({ to: m.route });
   }
 
   return (
