@@ -33,7 +33,6 @@ function MissionsPage() {
     queryFn: async () => (await supabase.from("mission_progress").select("mission_id,period_key").eq("user_id", user!.id)).data ?? [],
   });
 
-  // Esta función se conserva para ser llamada desde las pantallas individuales de cada misión
   async function complete(m: any) {
     if (!user || !profile) return;
     const pk = periodKey(m.frequency);
@@ -45,24 +44,25 @@ function MissionsPage() {
     qc.invalidateQueries();
   }
 
-  // Manejador del clic seguro para redirigir dinámicamente evitando el estricto "Not Found" de TanStack
   function handleMissionClick(m: any) {
-    // Determinar la ruta destino priorizando lo que venga de la base de datos
-    const targetRoute = m.route || m.slug || m.url;
+    let targetRoute = m.route || m.slug || m.url;
 
     if (!targetRoute) {
-      toast.error("Esta misión no tiene una ruta de actividad configurada.");
+      toast.error("Esta misión no tiene una ruta configurada.");
       return;
     }
 
-    try {
-      // Intentamos usar el sistema de navegación nativo del navegador para rutas dinámicas externas/nuevas
-      // Esto evita que TanStack Router lance un error fatal si la ruta aún no está registrada en su árbol estricto
-      window.location.href = targetRoute;
-    } catch (err) {
-      // Respaldo por si falla la redirección nativa
-      navigate({ to: targetRoute as any });
+    // AUTO-CONVERSIÓN: Si la ruta en la BD tiene puntos (ej: app.juegos.trivia), 
+    // la transforma a formato URL (ej: /app/juegos/trivia)
+    if (targetRoute.includes(".")) {
+      targetRoute = targetRoute.replace(/\./g, "/");
     }
+    if (!targetRoute.startsWith("/")) {
+      targetRoute = "/" + targetRoute;
+    }
+
+    // Navegación forzada directa
+    window.location.href = targetRoute;
   }
 
   return (
