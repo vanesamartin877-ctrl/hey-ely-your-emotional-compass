@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile } from "@/lib/session";
@@ -21,6 +21,7 @@ function MissionsPage() {
   const { user } = useSession();
   const { profile } = useProfile(user?.id);
   const qc = useQueryClient();
+  const navigate = useNavigate();
 
   const { data: missions } = useQuery({
     queryKey: ["missions"],
@@ -32,6 +33,7 @@ function MissionsPage() {
     queryFn: async () => (await supabase.from("mission_progress").select("mission_id,period_key").eq("user_id", user!.id)).data ?? [],
   });
 
+  // Esta función se conserva para ser llamada desde las pantallas individuales de cada misión
   async function complete(m: any) {
     if (!user || !profile) return;
     const pk = periodKey(m.frequency);
@@ -41,6 +43,12 @@ function MissionsPage() {
     await supabase.from("profiles").update({ xp: profile.xp + m.xp_reward }).eq("id", user.id);
     toast.success(`+${m.xp_reward} XP · ¡Bien hecho!`);
     qc.invalidateQueries();
+  }
+
+  // Manejador del clic que redirige en lugar de completar directamente
+  function handleMissionClick(m: any) {
+    const targetRoute = m.route || m.slug || m.url || `/app/misiones/${m.id}`;
+    navigate({ to: targetRoute });
   }
 
   return (
@@ -58,7 +66,7 @@ function MissionsPage() {
                 <div className="font-bold">{m.title}</div>
                 <div className="text-xs text-muted-foreground">{m.description}</div>
               </div>
-              <button onClick={() => complete(m)} disabled={isDone} className={`rounded-full px-3 py-2 text-xs font-bold ${isDone ? "bg-secondary" : "bg-primary text-primary-foreground shadow-soft"}`}>
+              <button onClick={() => handleMissionClick(m)} disabled={isDone} className={`rounded-full px-3 py-2 text-xs font-bold ${isDone ? "bg-secondary" : "bg-primary text-primary-foreground shadow-soft"}`}>
                 {isDone ? <Check className="h-4 w-4" /> : "Completar"}
               </button>
             </div>
