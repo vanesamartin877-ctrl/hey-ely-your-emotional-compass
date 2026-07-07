@@ -155,19 +155,26 @@ export function AvatarSVG({ config, size = 160 }: { config: AvatarConfig; size?:
 
       {/* CABEZA */}
       <rect x="48" y="36" width="104" height="96" rx="46" fill={c.skin} {...strokeProps} />
-      <ellipse cx="66" cy="106" rx="11" ry="6" fill="#FF94B8" opacity="0.6" />
-      <ellipse cx="134" cy="106" rx="11" ry="6" fill="#FF94B8" opacity="0.6" />
+      <ellipse cx="64" cy="108" rx="13" ry="7" fill="#FF94B8" opacity="0.55" />
+      <ellipse cx="136" cy="108" rx="13" ry="7" fill="#FF94B8" opacity="0.55" />
+      {/* Nariz sutil */}
+      <path d="M99 100 Q100 104 101 100" fill="none" stroke="#1A1A1A" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
 
       {/* OJOS */}
       <g>
         {c.eyes === "normal" && (
           <>
-            <ellipse cx="73" cy="91" rx="10" ry="13" fill="#1A1A1A" />
-            <circle cx="71" cy="85" r="4" fill="#FFF" />
-            <circle cx="76" cy="95" r="1.5" fill="#FFF" />
-            <ellipse cx="127" cy="91" rx="10" ry="13" fill="#1A1A1A" />
-            <circle cx="125" cy="85" r="4" fill="#FFF" />
-            <circle cx="130" cy="95" r="1.5" fill="#FFF" />
+            {/* Ojos grandes estilo anime chibi */}
+            <ellipse cx="72" cy="93" rx="13" ry="17" fill="#1A1A1A" stroke="#1A1A1A" strokeWidth="2" />
+            <ellipse cx="72" cy="94" rx="10" ry="14" fill={c.hairColor} opacity="0.85" />
+            <circle cx="69" cy="87" r="5" fill="#FFF" />
+            <circle cx="75" cy="99" r="2.5" fill="#FFF" />
+            <circle cx="66" cy="92" r="1.5" fill="#FFF" opacity="0.8" />
+            <ellipse cx="128" cy="93" rx="13" ry="17" fill="#1A1A1A" stroke="#1A1A1A" strokeWidth="2" />
+            <ellipse cx="128" cy="94" rx="10" ry="14" fill={c.hairColor} opacity="0.85" />
+            <circle cx="125" cy="87" r="5" fill="#FFF" />
+            <circle cx="131" cy="99" r="2.5" fill="#FFF" />
+            <circle cx="122" cy="92" r="1.5" fill="#FFF" opacity="0.8" />
           </>
         )}
         {c.eyes === "happy" && (
