@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile } from "@/lib/session";
@@ -21,7 +21,6 @@ function MissionsPage() {
   const { user } = useSession();
   const { profile } = useProfile(user?.id);
   const qc = useQueryClient();
-  const navigate = useNavigate();
 
   const { data: missions } = useQuery({
     queryKey: ["missions"],
@@ -33,7 +32,7 @@ function MissionsPage() {
     queryFn: async () => (await supabase.from("mission_progress").select("mission_id,period_key").eq("user_id", user!.id)).data ?? [],
   });
 
-  // Esta función se queda intacta en el archivo para tu referencia o si la importas en tus pantallas
+  // Esta función se conserva intacta para ser llamada desde las pantallas individuales
   async function complete(m: any) {
     if (!user || !profile) return;
     const pk = periodKey(m.frequency);
@@ -45,15 +44,23 @@ function MissionsPage() {
     qc.invalidateQueries();
   }
 
-  // Lógica de navegación limpia sugerida por la auditoría del ZIP
+  // Muestra indicaciones claras del módulo y la actividad en lugar de navegar y romper la app
   function handleMissionClick(m: any) {
-    if (!m.route) {
-      toast.error("Esta misión no tiene una ruta configurada en la base de datos.");
-      return;
-    }
+    let modulo = "Juegos";
+    const ruta = m.route || "";
 
-    // Navega directamente usando el Router de TanStack hacia la URL real (Ej: /app/juegos/trivia)
-    navigate({ to: m.route });
+    // Detectamos el módulo según el texto de la ruta en la base de datos
+    if (ruta.includes("chat")) modulo = "Chat AI";
+    else if (ruta.includes("avatar")) modulo = "Avatar";
+    else if (ruta.includes("mascota")) modulo = "Mascota";
+    else if (ruta.includes("perfil")) modulo = "Perfil";
+    else if (ruta.includes("noticias")) modulo = "Noticias";
+    else if (ruta.includes("recursos")) modulo = "Recursos";
+
+    // Mostramos la alerta con las indicaciones exactas paso a paso
+    toast.info(`📍 Para cumplirla ve a: Módulo ${modulo} ➔ Actividad: "${m.title}"`, {
+      duration: 6000,
+    });
   }
 
   return (
